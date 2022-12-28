@@ -1,0 +1,514 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1671722432,
+        "narHash": "sha256-ojcZUekIQeOZkHHzR81st7qxX99dB1Eaaq6PU5MNeKc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "652e92b8064949a11bc193b90b74cb727f2a1405",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1671722432,
+        "narHash": "sha256-ojcZUekIQeOZkHHzR81st7qxX99dB1Eaaq6PU5MNeKc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "652e92b8064949a11bc193b90b74cb727f2a1405",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "yotta": "yotta",
+        "ytDepBleApi": "ytDepBleApi",
+        "ytDepCmsisCore": "ytDepCmsisCore",
+        "ytDepCmsisCoreNordic": "ytDepCmsisCoreNordic",
+        "ytDepCmsisCoreNrf51822": "ytDepCmsisCoreNrf51822",
+        "ytDepCompilerPolyfill": "ytDepCompilerPolyfill",
+        "ytDepCoreUtil": "ytDepCoreUtil",
+        "ytDepDmalloc": "ytDepDmalloc",
+        "ytDepGreenteaClient": "ytDepGreenteaClient",
+        "ytDepMbedClassic": "ytDepMbedClassic",
+        "ytDepMbedDrivers": "ytDepMbedDrivers",
+        "ytDepMbedHal": "ytDepMbedHal",
+        "ytDepMbedHalNordic": "ytDepMbedHalNordic",
+        "ytDepMbedHalNrf51822Mcu": "ytDepMbedHalNrf51822Mcu",
+        "ytDepMicrobit": "ytDepMicrobit",
+        "ytDepMicrobitDal": "ytDepMicrobitDal",
+        "ytDepMinar": "ytDepMinar",
+        "ytDepMinarPlatform": "ytDepMinarPlatform",
+        "ytDepMinarPlatformMbed": "ytDepMinarPlatformMbed",
+        "ytDepNrf51822": "ytDepNrf51822",
+        "ytDepNrf51Sdk": "ytDepNrf51Sdk",
+        "ytDepUalloc": "ytDepUalloc",
+        "ytTargetMbed": "ytTargetMbed",
+        "ytTargetMicrobit": "ytTargetMicrobit"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "yotta": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "utils": "utils",
+        "yottaSrc": "yottaSrc"
+      },
+      "locked": {
+        "dir": "nix",
+        "lastModified": 1672057296,
+        "narHash": "sha256-Xg3acIViuF0ncr8CTSMhOnZ/n7OOlwUnh0rY4MpdvzA=",
+        "owner": "joxcat",
+        "repo": "yotta",
+        "rev": "42dca60d67e4a18f806385a8a93ed2b92fbe8654",
+        "type": "github"
+      },
+      "original": {
+        "dir": "nix",
+        "owner": "joxcat",
+        "repo": "yotta",
+        "type": "github"
+      }
+    },
+    "yottaSrc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1610718587,
+        "narHash": "sha256-xvMVw0aD8qLkwkT63u2s5QDecKY5DAQdGUw/0jF0DMY=",
+        "owner": "joxcat",
+        "repo": "yotta",
+        "rev": "82d854b43d391abb5a006b05e7beffe7d0d6ffbf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "joxcat",
+        "repo": "yotta",
+        "rev": "82d854b43d391abb5a006b05e7beffe7d0d6ffbf",
+        "type": "github"
+      }
+    },
+    "ytDepBleApi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1452597336,
+        "narHash": "sha256-uPPbTUmN3ZwYaG2TFK1JpT9rEkk0cVKtuuTfMwAHrNo=",
+        "owner": "lancaster-university",
+        "repo": "BLE_API",
+        "rev": "e0f693adde29086b7c0b55f60096bbb944701fdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lancaster-university",
+        "ref": "v2.5.0",
+        "repo": "BLE_API",
+        "type": "github"
+      }
+    },
+    "ytDepCmsisCore": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761066,
+        "narHash": "sha256-5z8u+Is3k35+k3+wesvoZoJ+iqG4ImS4OGuBmYHi7oQ=",
+        "owner": "ARMmbed",
+        "repo": "cmsis-core",
+        "rev": "77a2f5910491fcb69661fc3e97b82a5efb691b2b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "cmsis-core",
+        "type": "github"
+      }
+    },
+    "ytDepCmsisCoreNordic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761088,
+        "narHash": "sha256-7tv5OJnkmFhgqlKxlOgo2lXmRcmg1Xe7wdzBGwJpX6k=",
+        "owner": "ARMmbed",
+        "repo": "cmsis-core-nordic",
+        "rev": "4c59a272e18a797b4a8581cdebb71db0d18f2125",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "cmsis-core-nordic",
+        "type": "github"
+      }
+    },
+    "ytDepCmsisCoreNrf51822": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761094,
+        "narHash": "sha256-yaOPYQvJEjxkhlCmb6+wn4UkphUonQQB9h3hocIj4ko=",
+        "owner": "ARMmbed",
+        "repo": "cmsis-core-nrf51822",
+        "rev": "9a48b0db2fa986816876f196856aefbb2368509f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "cmsis-core-nrf51822",
+        "type": "github"
+      }
+    },
+    "ytDepCompilerPolyfill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1450276244,
+        "narHash": "sha256-fhM3wpKX4YDoIjm1AzC+4HFR/9k5ueKEv/yurr/cVIQ=",
+        "owner": "ARMmbed",
+        "repo": "compiler-polyfill",
+        "rev": "2aea604ece62a21772b487c4091660659ff89315",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "ref": "v1.2.1",
+        "repo": "compiler-polyfill",
+        "type": "github"
+      }
+    },
+    "ytDepCoreUtil": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1610715917,
+        "narHash": "sha256-oq7VLfa8TNdBsrflsIzuX4FPnie49TJLLUGS2VwGX/s=",
+        "owner": "ARMmbed",
+        "repo": "core-util",
+        "rev": "a5f72c088c22b3d44c8c0e8184f29cf5141affb7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "core-util",
+        "type": "github"
+      }
+    },
+    "ytDepDmalloc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761124,
+        "narHash": "sha256-N2I17WTsKDiSQZTW2yN7obKwI79TidB/XgnznqCKEmo=",
+        "owner": "ARMmbed",
+        "repo": "dlmalloc",
+        "rev": "8a73d769483b2f87f74f4f441245f98d5d8860d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "dlmalloc",
+        "type": "github"
+      }
+    },
+    "ytDepGreenteaClient": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1467129926,
+        "narHash": "sha256-Pg1PRCc7QDrutiv5ZOptjJ4bmxgIKHZFySdwp4MTBVA=",
+        "owner": "ARMmbed",
+        "repo": "greentea-client",
+        "rev": "d0cbb41ae7939e1a0b159c110244ceea5ddaca49",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "ref": "v1.3.0",
+        "repo": "greentea-client",
+        "type": "github"
+      }
+    },
+    "ytDepMbedClassic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1454427052,
+        "narHash": "sha256-gXygqNmzh9kEw3OrgxYvW81uoL8IlTxrGe2WxdgiLNw=",
+        "owner": "lancaster-university",
+        "repo": "mbed-classic",
+        "rev": "6888edef4c8ba0e1a0597eabeceb60a779e9ce2b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lancaster-university",
+        "ref": "microbit_hfclk",
+        "repo": "mbed-classic",
+        "type": "github"
+      }
+    },
+    "ytDepMbedDrivers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1484560406,
+        "narHash": "sha256-LD3K/zeBi3o/D8SJllYWrNQ0coPYeil4y513sUm489g=",
+        "owner": "ARMmbed",
+        "repo": "mbed-drivers",
+        "rev": "af333f94c954c4c9457edc6c9d7d34ecf6deca48",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "mbed-drivers",
+        "type": "github"
+      }
+    },
+    "ytDepMbedHal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1452763185,
+        "narHash": "sha256-QenEl2jiNXKI8wGNpBysf5cgh6KAnO11gP0oThjn1Ns=",
+        "owner": "ARMmbed",
+        "repo": "mbed-hal",
+        "rev": "066c975037ede25fcd95cdb25d4d1db879edd05b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "ref": "v1.2.1",
+        "repo": "mbed-hal",
+        "type": "github"
+      }
+    },
+    "ytDepMbedHalNordic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761239,
+        "narHash": "sha256-Y7KUexy0Ezjsvk+0erXB7rTzl8/wKqJfANfqfRg/fn0=",
+        "owner": "ARMmbed",
+        "repo": "mbed-hal-nordic",
+        "rev": "1605d8895a769610076395107713aeaa3ab76cc3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "ref": "v2.1.0",
+        "repo": "mbed-hal-nordic",
+        "type": "github"
+      }
+    },
+    "ytDepMbedHalNrf51822Mcu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761245,
+        "narHash": "sha256-42NS6hvEOXaEGIR1MHJgj1Jdpzc+DIPYOZJjOY/ocpw=",
+        "owner": "ARMmbed",
+        "repo": "mbed-hal-nrf51822-mcu",
+        "rev": "7ae95473cf3182ffa36617c4a435693a850ddd29",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "ref": "v2.2.0",
+        "repo": "mbed-hal-nrf51822-mcu",
+        "type": "github"
+      }
+    },
+    "ytDepMicrobit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1591637905,
+        "narHash": "sha256-TIZd3X92KuzFumkgsyEeEpRblkq0z+jbWFXqqtRFCDQ=",
+        "ref": "refs/heads/master",
+        "rev": "1d1baa561f82ab0d16d1916b0026955c67d95e74",
+        "revCount": 74,
+        "type": "git",
+        "url": "https://git.mob-dev.fr/Schoumi/microbit.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.mob-dev.fr/Schoumi/microbit.git"
+      }
+    },
+    "ytDepMicrobitDal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1591637583,
+        "narHash": "sha256-Wof4TtCo246BilWE3Un1Og5wDG3+OB+Njl7hztgOkak=",
+        "owner": "lancaster-university",
+        "repo": "microbit-dal",
+        "rev": "2443bebacee0eee8d57d032a3d9617c87f50232e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lancaster-university",
+        "ref": "v2.2.0-rc6",
+        "repo": "microbit-dal",
+        "type": "github"
+      }
+    },
+    "ytDepMinar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1459427089,
+        "narHash": "sha256-mnevOir+qzyX0PULTQ2mOVgiPk3Eb43sJhybxrWWIPQ=",
+        "owner": "ARMmbed",
+        "repo": "minar",
+        "rev": "637c5b7b3e4943d8cab81a2e7773fc32c4ca059b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "minar",
+        "type": "github"
+      }
+    },
+    "ytDepMinarPlatform": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761279,
+        "narHash": "sha256-67ScPzRZeFeQeaJ8LwLUiXickqntPVhAw0kmA4eEkUg=",
+        "owner": "ARMmbed",
+        "repo": "minar-platform",
+        "rev": "3a290d9bd488ac99eeb339333d55df4267c19748",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "minar-platform",
+        "type": "github"
+      }
+    },
+    "ytDepMinarPlatformMbed": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1458761289,
+        "narHash": "sha256-kb7A04uDBgjMLy7ToRmd9Ba0+yN0j6VFdgHv/SJi1Vk=",
+        "owner": "ARMmbed",
+        "repo": "minar-platform-mbed",
+        "rev": "6221a675419c2475f007b37f4bcea65efd082628",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "minar-platform-mbed",
+        "type": "github"
+      }
+    },
+    "ytDepNrf51822": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1452625096,
+        "narHash": "sha256-We7FCzkiauBa7zsJAPqshGYxa6sPoMdg+S/7SQiO4kM=",
+        "owner": "lancaster-university",
+        "repo": "nrf51822",
+        "rev": "d9c019823740408bea1bc507b7aed7b261b90623",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lancaster-university",
+        "ref": "v2.5.0",
+        "repo": "nrf51822",
+        "type": "github"
+      }
+    },
+    "ytDepNrf51Sdk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1452548656,
+        "narHash": "sha256-lRCr6TvBbnG/ohNc3OJsdvHwmO5Y6oGsu5svNkzIA8Q=",
+        "owner": "lancaster-university",
+        "repo": "nrf51-sdk",
+        "rev": "90647e370e5790fe06362bed7633f64a776b814b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lancaster-university",
+        "ref": "v2.2.0",
+        "repo": "nrf51-sdk",
+        "type": "github"
+      }
+    },
+    "ytDepUalloc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1610715785,
+        "narHash": "sha256-IwOPiQDHdp2JkLtSVQDTSk+hHuSupjW2gH3UYN9LwhM=",
+        "owner": "ARMmbed",
+        "repo": "ualloc",
+        "rev": "297f02d2a6ca4d0fb8df80b6ce2036623c5358e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ARMmbed",
+        "repo": "ualloc",
+        "type": "github"
+      }
+    },
+    "ytTargetMbed": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657294477,
+        "narHash": "sha256-K3uUs0o3F12tJtjCFVATsdn38ppxFxc6DU5q6SYEoV0=",
+        "ref": "refs/heads/master",
+        "rev": "5710e9286e4ab5b5b9b850855afd1cb71ca5308a",
+        "revCount": 93,
+        "type": "git",
+        "url": "https://git.mob-dev.fr/Schoumi/target-mbed-gcc.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.mob-dev.fr/Schoumi/target-mbed-gcc.git"
+      }
+    },
+    "ytTargetMicrobit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657294633,
+        "narHash": "sha256-gnnI4tvM6/JqFIFucf1zseP8E/wXF9sMuvVGMQQv0fI=",
+        "ref": "refs/heads/master",
+        "rev": "54003d6613bf158e4a9c10d00ae1fa40f7efb9b2",
+        "revCount": 4,
+        "type": "git",
+        "url": "https://git.mob-dev.fr/Schoumi/yotta-target-bbc-microbit-classic-gcc.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.mob-dev.fr/Schoumi/yotta-target-bbc-microbit-classic-gcc.git"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

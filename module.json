@@ -1,0 +1,17 @@
+{
+  "name": "pfp",
+  "version": "0.1.0",
+  "description": "Microbit pfp client",
+  "license": "MIT",
+  "extraIncludes": [
+    "include/hana/include",
+    "include/PEGTL/include",
+    "include/asenum/include/asenum",
+    "include/curve25519/include"
+  ],
+  "dependencies": {
+    "microbit": "https://git.mob-dev.fr/Schoumi/microbit.git"
+  },
+  "targetDependencies": {},
+  "bin": "./src"
+}
