@@ -16,17 +16,26 @@ ifeq ($(VERSION),)
 	@false
 endif
 
-INCLUDES := /usr/arm-none-eabi/include \
-						yotta_modules/microbit/inc \
-						yotta_modules/mbed-classic/api \
-						yotta_modules/mbed-classic/hal \
-						yotta_modules/mbed-classic/targets/hal/TARGET_NORDIC/TARGET_MCU_NRF51822 \
-						yotta_modules/mbed-classic/targets/hal/TARGET_NORDIC/TARGET_MCU_NRF51822/TARGET_NRF51_MICROBIT \
-						yotta_modules/mbed-classic/targets/cmsis \
-						yotta_modules/mbed-classic/targets/cmsis/TARGET_NORDIC/TARGET_MCU_NRF51822
+INCLUDES := include/asenum/include/asenum \
+		include/hana/include \
+		include/PEGTL/include \
+		include/curve25519/include \
+		yotta_modules/microbit/inc \
+		yotta_modules/microbit-dal/inc/core \
+		yotta_modules/microbit-dal/inc/platform \
+		yotta_modules/microbit-dal/inc/drivers \
+		yotta_modules/microbit-dal/inc/types \
+		yotta_modules/microbit-dal/inc/bluetooth \
+		yotta_modules/ble \
+		yotta_modules/mbed-classic/api \
+		yotta_modules/mbed-classic/hal \
+		yotta_modules/mbed-classic/targets/hal/TARGET_NORDIC/TARGET_MCU_NRF51822 \
+		yotta_modules/mbed-classic/targets/hal/TARGET_NORDIC/TARGET_MCU_NRF51822/TARGET_NRF51_MICROBIT \
+		yotta_modules/mbed-classic/targets/cmsis \
+		yotta_modules/mbed-classic/targets/cmsis/TARGET_NORDIC/TARGET_MCU_NRF51822
 
 check: check-deps
-	clang-tidy --header-filter="" src/main.cpp -- -nostdinc++ -DNRF51=TRUE -isystem/usr/arm-none-eabi/include $(shell for folder in $(INCLUDES); do echo "-I$$folder"; done)
+	clang-tidy src/main.cpp -- $(shell for folder in $(INCLUDES); do echo "-I$$folder"; done)
 
 build: check-deps
 	@yt build
