@@ -4,6 +4,7 @@
   "description": "Microbit pfp client",
   "license": "MIT",
   "extraIncludes": [
+    "include",
     "include/hana/include",
     "include/PEGTL/include",
     "include/asenum/include/asenum",

@@ -1,5 +1,6 @@
 {
 	"C_Cpp.default.includePath": [
+    "include",
 		"include/asenum/include/asenum",
 		"include/hana/include",
 		"include/PEGTL/include",

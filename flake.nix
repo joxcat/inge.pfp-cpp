@@ -68,6 +68,8 @@
       cmake
       srecord
       ninja
+      cppcheck
+      clang
     ];
 
     pfp = pkgs.stdenvNoCC.mkDerivation {

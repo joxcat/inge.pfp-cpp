@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include "asenum.h"
 #include "tao/pegtl.hpp"
 #include "external_calls.h"
+#include "doctest.h"
 
 MicroBit uBit;
 
