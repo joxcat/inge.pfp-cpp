@@ -1,47 +1,67 @@
-/*
-The MIT License (MIT)
-
-Copyright (c) 2016 British Broadcasting Corporation.
-This software is provided by Lancaster University by arrangement with the BBC.
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-*/
-
 #include "MicroBit.h"
-#include "asenum.h"
-#include "tao/pegtl.hpp"
-#include "external_calls.h"
-#include "doctest.h"
+#include "base64.hpp"
+#include "pfp/protocol.hpp"
+#include "pfp/log.hpp"
+#include "pfp/crypto.hpp"
+#include "pfp/test_data.hpp"
 
 MicroBit uBit;
+MicroBitSerial serial(USBTX, USBRX);
+Logger logger(uBit.messageBus);
 
-int main()
-{
-    // Initialise the micro:bit runtime.
-    uBit.init();
+int8_t recv_buffer[PROTOCOL_MAX_PACKET_SIZE];
 
-    // Insert your code here!
-    uBit.display.scroll("HELLO WORLD! :)");
-
-    // If main exits, there may still be other fibers running or registered event handlers etc.
-    // Simply release this fiber, which will mean we enter the scheduler. Worse case, we then
-    // sit in the idle task forever, in a power efficient sleep.
-    release_fiber();
+void on_recv(MicroBitEvent) {
+  logger.enter_span("RADIO RECV");
+  
+  PacketBuffer p = uBit.radio.datagram.recv();
+  Packet packet;
+  logger.info("Received packet");
+  if (Packet::deserialize(p.getBytes(), packet) < 0) {
+    logger.warn("Failed to deserialize packet");
+    logger.debug(bthex(p.getBytes(), p.length()).toCharArray());
+    logger.debug(bttext(p.getBytes(), p.length()).toCharArray());
+  } else {
+    logger.info("Received packet");
+    logger.debug(ManagedString(packet.command_id).toCharArray());
+  }
 }
 
+void on_log(MicroBitEvent) {
+  ManagedString log_msg(logger.buffer);
+  serial.send(log_msg);
+}
+
+int main() {
+  // Initialise the micro:bit runtime.
+  uBit.init();
+  uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, on_recv, MESSAGE_BUS_LISTENER_REENTRANT);
+  uBit.messageBus.listen(PFP_ID_EVT_LOG, PFP_LOG_EVT_SEND, on_log, MESSAGE_BUS_LISTENER_IMMEDIATE);
+  uBit.seedRandom();
+  uBit.radio.enable();
+
+  uBit.display.scroll("INIT");
+  ManagedString device_id = uBit.getSerial();
+
+  int x = 0;
+
+  while (true) {
+    logger.enter_span("MAIN LOOP");
+    if (x == 0) {
+      uBit.radio.datagram.send(ManagedString("Hello World!"));
+      logger.info("Sent Hello World!");
+      x = 1;
+    } else {
+      uBit.radio.datagram.send((uint8_t*)DISCOVER_PACKET, PROTOCOL_MAX_PACKET_SIZE);
+      logger.info("Sent HELOP!");
+      x = 0;
+    }
+
+    uBit.sleep(5000);
+  }
+
+  // If main exits, there may still be other fibers running or registered event handlers etc.
+  // Simply release this fiber, which will mean we enter the scheduler. Worse case, we then
+  // sit in the idle task forever, in a power efficient sleep.
+  release_fiber();
+}

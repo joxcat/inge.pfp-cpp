@@ -6,12 +6,11 @@
   "extraIncludes": [
     "include",
     "include/hana/include",
-    "include/PEGTL/include",
-    "include/asenum/include/asenum",
-    "include/curve25519/include"
+    "include/asenum/include/asenum"
   ],
   "dependencies": {
-    "microbit": "https://git.mob-dev.fr/Schoumi/microbit.git"
+    "microbit": "https://git.mob-dev.fr/Schoumi/microbit.git",
+    "tiny-aes-c": "https://github.com/joxcat/tiny-AES-c.git"
   },
   "targetDependencies": {},
   "bin": "./src"

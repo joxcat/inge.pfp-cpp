@@ -41,7 +41,7 @@ build: check-deps
 	@yt build
 
 install: check-deps
-	@cp build/bbc-microbit-classic-gcc/source/microbit-samples-combined.hex /run/media/$(USER)/MICROBIT/
+	@cp build/bbc-microbit-classic-gcc/src/pfp-combined.hex /run/media/$(USER)/MICROBIT/
 	@echo "Install done"
 
 clean: check-deps
