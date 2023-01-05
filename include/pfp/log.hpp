@@ -2,6 +2,7 @@
 #define __PFP_LOG_HPP__
 
 #include <string>
+#include <functional>
 
 #include "MicroBit.h"
 
@@ -12,9 +13,7 @@
 
 #define LOG_LEVEL LOG_LEVEL_DEBUG
 
-#define PFP_ID_EVT_LOG 50
-#define PFP_LOG_EVT_SEND 1
-#define PFP_LOG_BUFFER_SIZE 128
+#define PFP_LOG_BUFFER_SIZE 64
 #define PFP_LOG_SPAN_NAME_SIZE 16
 
 class Logger;
@@ -32,17 +31,20 @@ class Span {
 
 class Logger {
 	private:
-		MicroBitMessageBus bus;
-		Span *span;
+		std::function<void()> on_log;
+		Span * span;
 		void log(char *msg, const char *level);
+		bool is_clone = false;
 
 	public:
-		char buffer[PFP_LOG_BUFFER_SIZE];
+		char * buffer;
 		
-		Logger(MicroBitMessageBus &bus);
+		Logger(std::function<void()> on_log);
+		Logger(Logger const& logger);
+		~Logger();
+		Logger clone();
 
-		Span enter_span(const char * name);
-		void leave_span();
+		Logger enter_span(const char * name);
 		
 		void debug(std::string const& msg);
 		void debug(const unsigned char *msg);

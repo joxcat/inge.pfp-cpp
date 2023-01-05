@@ -44,6 +44,17 @@ install: check-deps
 	@cp build/bbc-microbit-classic-gcc/src/pfp-combined.hex /run/media/$(USER)/MICROBIT/
 	@echo "Install done"
 
+autoinstall: check-deps
+ifeq ($(ID),)
+	sudo mount --mkdir -o "gid=$(shell id -u),uid=$(shell id -g)" /dev/disk/by-label/MICROBIT /run/media/$(USER)/MICROBIT
+else
+	sudo mount --mkdir -o "gid=$(shell id -u),uid=$(shell id -g)" /dev/disk/by-id/$(ID) /run/media/$(USER)/MICROBIT
+endif
+	@cp build/bbc-microbit-classic-gcc/src/pfp-combined.hex /run/media/$(USER)/MICROBIT/
+	@echo "Install done"
+	sudo umount /run/media/$(USER)/MICROBIT
+	sudo rm -rf /run/media/$(USER)/MICROBIT
+
 clean: check-deps
 	@yt clean
 	@echo "Cleaning done"

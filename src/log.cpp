@@ -3,18 +3,37 @@
 #include "MicroBit.h"
 #include "pfp/log.hpp"
 
-Logger::Logger(MicroBitMessageBus &bus) {
-	this->bus = bus;
+Logger::Logger(std::function<void()> on_log) {
+	this->on_log = on_log;
+	this->buffer = new char[PFP_LOG_BUFFER_SIZE];
+	this->buffer[0] = '\0';
+	this->span = nullptr;
+}
+Logger::Logger(Logger const& logger) {
+	this->on_log = logger.on_log;
+	this->buffer = logger.buffer;
+	this->span = logger.span;
+	this->is_clone = true;
+}
+Logger::~Logger() {
+	if (!this->is_clone) {
+		delete this->buffer;
+	}
+	if (this->span) delete this->span;
+}
+Logger Logger::clone() {
+	return Logger(*this);
 }
 
 void Logger::log(char *msg, const char *level) {
-	if (this->span != nullptr) {
+	if (this->span && this->span != nullptr) {
 		sprintf(this->buffer, "[%s - %s]: %s\r\n", level, span->name, msg);
 	} else {
 		sprintf(this->buffer, "[%s]: %s\r\n", level, msg);
 	}
-	MicroBitEvent log_event(PFP_ID_EVT_LOG, PFP_LOG_EVT_SEND, CREATE_ONLY);
-	this->bus.send(log_event);
+	// MicroBitEvent log_event(PFP_ID_EVT_LOG, PFP_LOG_EVT_SEND, CREATE_ONLY);
+	// XXX: Does not work with clone
+	this->on_log();
 }
 
 void Logger::debug(std::string const& msg) { this->debug((char *)msg.c_str()); }
@@ -58,7 +77,8 @@ ManagedString bthex(uint8_t *buffer, uint8_t len) {
 	for (int i = 0; i < len; i++) {
 		sprintf(hex, "%s 0x%02X", hex, buffer[i]);
 	}
-	return ManagedString(hex);
+	ManagedString result(hex);
+	return result;
 }
 
 ManagedString bttext(uint8_t *buffer, uint8_t len) {
@@ -71,19 +91,14 @@ ManagedString bttext(uint8_t *buffer, uint8_t len) {
 }
 
 // Span
-Span Logger::enter_span(const char * name) {
-	this->span = new Span(name);
-	return *this->span;
-}
-
-void Logger::leave_span() {
-	delete this->span;
+Logger Logger::enter_span(const char * name) {
+	Logger span_logger = this->clone();
+	Span * span = new Span(name);
+	span_logger.span = span;
+	return span_logger;
 }
 
 Span::Span(const char * name) {
 	this->name = name;
 }
-
-Span::~Span() {
-	this->logger->leave_span();
-}
+Span::~Span() {}

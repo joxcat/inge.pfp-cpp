@@ -48,7 +48,7 @@ struct Packet {
 		Packet();
 		~Packet();
 
-		static int deserialize(uint8_t *buffer, Packet &packet);
+		static int deserialize(uint8_t *buffer, int buffer_length, Packet &packet);
 		int serialize(uint8_t *dest_buffer);
 };
 

@@ -15,10 +15,10 @@ uint32_t deserialize_uint32(uint8_t *buffer, int *offset) {
 	return uint8_arr_to_uint32(buffer + prev_offset);
 }
 
-int Packet::deserialize(uint8_t *buffer, Packet &packet) {
+int Packet::deserialize(uint8_t *buffer, int buffer_length, Packet &packet) {
 	if (buffer == nullptr) {
 		return -1;
-	} else if (strlen((char*)buffer) < PROTOCOL_MAX_PACKET_SIZE) {
+	} else if (buffer_length < PROTOCOL_MAX_PACKET_SIZE) {
 		return -2;
 	}
 
