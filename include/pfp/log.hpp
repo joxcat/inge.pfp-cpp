@@ -31,15 +31,15 @@ class Span {
 
 class Logger {
 	private:
-		std::function<void()> on_log;
+		std::function<void(char *)> on_log;
 		Span * span;
 		void log(char *msg, const char *level);
 		bool is_clone = false;
 
 	public:
-		char * buffer;
+		std::array<char, PFP_LOG_BUFFER_SIZE> * buffer;
 		
-		Logger(std::function<void()> on_log);
+		Logger(std::function<void(char *)> on_log);
 		Logger(Logger const& logger);
 		~Logger();
 		Logger clone();
@@ -48,22 +48,22 @@ class Logger {
 		
 		void debug(std::string const& msg);
 		void debug(const unsigned char *msg);
-		void debug(const char *msg);
+		void debug(const char *msg, ...);
 		void debug(char *msg);
 		
 		void info(std::string const& msg);
 		void info(const unsigned char *msg);
-		void info(const char *msg);
+		void info(const char *msg, ...);
 		void info(char *msg);
 
 		void warn(std::string const& msg);
 		void warn(const unsigned char *msg);
-		void warn(const char *msg);
+		void warn(const char *msg, ...);
 		void warn(char *msg);
 
 		void error(std::string const& msg);
 		void error(const unsigned char *msg);
-		void error(const char *msg);
+		void error(const char *msg, ...);
 		void error(char *msg);
 };
 

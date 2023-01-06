@@ -4,47 +4,57 @@
 #include "pfp/log.hpp"
 #include "pfp/crypto.hpp"
 #include "pfp/test_data.hpp"
+#include "pfp/state.hpp"
 
-MicroBit uBit;
-MicroBitSerial serial(USBTX, USBRX);
+State state;
 
-void on_log();
+void on_log(char * msg);
 Logger logger(on_log);
-void on_log()  {
-  ManagedString log_msg(logger.buffer);
-  serial.send(log_msg);
+void on_log(char * msg)  {
+  ManagedString log_msg(msg);
+  (*state.serial).send(log_msg);
 }
-
-int8_t recv_buffer[PROTOCOL_MAX_PACKET_SIZE];
 
 void on_recv(MicroBitEvent) {
   Logger log = logger.enter_span("RADIO RECV");
   
-  PacketBuffer p = uBit.radio.datagram.recv();
+  PacketBuffer p = state.ubit.radio.datagram.recv();
   Packet packet;
-  if (Packet::deserialize(p.getBytes(), p.length(), packet) < 0) {
-    log.warn("Failed to deserialize packet");
+  DeserializeResult result = Packet::deserialize(p.getBytes(), p.length(), packet);
+
+  if (result.enumCase() != DeserializeCode::Success) {
+    result.doSwitch().ifCase<DeserializeCode::NotEnoughData>([&log](int bytes) {
+      log.warn("Not enough data (%d bytes received)", bytes);
+    }).ifCase<DeserializeCode::InvalidCommand>([&log](uint8_t command) {
+      log.warn("Invalid command (command id: %d)", command);
+    });
+
     log.debug(bthex(p.getBytes(), p.length()).toCharArray());
     log.debug(bttext(p.getBytes(), p.length()).toCharArray());
   } else {  
-    log.info("Received packet");
+    log.info("Received packet with command id %d", packet.command_id);
     log.debug(bthex(p.getBytes(), p.length()).toCharArray());
-    log.debug(ManagedString(packet.command_id).toCharArray());
   }
 }
 
 int main() {
+  // Register the listeners
+  state.ubit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, on_recv, MESSAGE_BUS_LISTENER_QUEUE_IF_BUSY);
   // Initialise the micro:bit runtime.
-  uBit.init();
-  uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, on_recv, MESSAGE_BUS_LISTENER_QUEUE_IF_BUSY);
-  uBit.seedRandom();
-  uBit.radio.enable();
-
-  ManagedString device_id = uBit.getSerial();
+  state.init();
 
   while (true) {
-    uBit.radio.datagram.send((uint8_t*)DISCOVER_PACKET, 13);
-    uBit.sleep(1000);
+    Logger log = logger.enter_span("MAIN LOOP");
+
+    if (state.current_device->get_device_state() == DeviceState::Alone) {
+      state.discover_network();
+      log.debug("Discovering network...");
+    } else {
+      state.ubit.display.scroll("UwU");
+      log.debug("I'm not alone! :D");
+    }
+
+    state.ubit.sleep(1000);
   }
 
   // If main exits, there may still be other fibers running or registered event handlers etc.

@@ -55,6 +55,14 @@ endif
 	sudo umount /run/media/$(USER)/MICROBIT
 	sudo rm -rf /run/media/$(USER)/MICROBIT
 
+autodeploy: check-deps
+	@echo "WARNING: Deploy to predefined microbits won't work with different devices (id identified)"
+	make autoinstall ID="usb-MBED_VFS_9901000051774e4500747019000000280000000097969901-0:0"
+	make autoinstall ID="usb-MBED_VFS_9901000051114e45004780170000004e0000000097969901-0:0"
+
+count-lines:
+	tokei -e include/asenum -e include/doctest.h src include
+
 clean: check-deps
 	@yt clean
 	@echo "Cleaning done"
