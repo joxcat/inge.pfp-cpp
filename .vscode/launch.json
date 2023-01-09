@@ -42,7 +42,7 @@
                 "MIMode": "gdb",
                 "miDebuggerPath": "arm-none-eabi-gdb",
                 "debugServerPath": "pyocd-gdbserver",
-                "debugServerArgs": "--persist -t nrf51 -bh -r",
+                "debugServerArgs": "--persist -t nrf51 -bh -r -b 28",
                 "setupCommands": [
                     { "text": "-environment-cd ${workspaceRoot}/build/bbc-microbit-classic-gcc/src" },
                     { "text": "-target-select remote localhost:3333", "description": "connect to target", "ignoreFailures": false },

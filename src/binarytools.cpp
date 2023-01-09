@@ -1,4 +1,4 @@
-#include <functional>
+#include <memory.h>
 
 #include "pfp/binarytools.hpp"
 
@@ -43,9 +43,7 @@ IncrementalReader &IncrementalReader::read(uint32_t *dest) {
 	return *this;
 }
 IncrementalReader &IncrementalReader::read(uint8_t *dest, int length) {
-	for (int i = 0; i < length; i++) {
-		dest[this->offset + i] = this->src[i];
-	}
+	memcpy(dest, this->src + this->offset, length);
 	this->offset += length;
 	return *this;
 }

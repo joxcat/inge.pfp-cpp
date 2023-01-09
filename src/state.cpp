@@ -41,7 +41,7 @@ void State::check_ttl() {
 
 void State::discover_network() {
 	Packet packet = Packet::new_packet_helop(this->current_device->get_id());
-	auto raw_packet = packet.to_bytes();
+	std::array<uint8_t, PROTOCOL_MAX_PACKET_SIZE> raw_packet = packet.to_bytes();
 	this->ubit.radio.datagram.send(raw_packet.data(), raw_packet.size());
 }
 

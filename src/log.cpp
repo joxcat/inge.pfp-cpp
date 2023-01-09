@@ -117,7 +117,8 @@ void Logger::error(char *msg) {
 }
 
 ManagedString bthex(uint8_t *buffer, uint8_t len) {
-	char hex[len*5] = {'\0'};
+	char hex[len*5];
+	std::fill(hex, hex + len*5, '\0');
 	for (int i = 0; i < len; i++) {
 		sprintf(hex, "%s 0x%02X", hex, buffer[i]);
 	}

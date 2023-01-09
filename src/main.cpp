@@ -18,9 +18,12 @@ void on_log(char * msg)  {
 void on_recv(MicroBitEvent) {
   Logger log = logger.enter_span("RADIO RECV");
   
+  log.info("Received packet");
   PacketBuffer p = state.ubit.radio.datagram.recv();
   Packet packet;
-  DeserializeResult result = Packet::deserialize(p.getBytes(), p.length(), packet);
+  uint8_t *bytes = p.getBytes();
+  int len = p.length();
+  DeserializeResult result = Packet::deserialize(bytes, len, packet);
 
   if (result.enumCase() != DeserializeCode::Success) {
     result.doSwitch().ifCase<DeserializeCode::NotEnoughData>([&log](int bytes) {
@@ -28,12 +31,8 @@ void on_recv(MicroBitEvent) {
     }).ifCase<DeserializeCode::InvalidCommand>([&log](uint8_t command) {
       log.warn("Invalid command (command id: %d)", command);
     });
-
-    log.debug(bthex(p.getBytes(), p.length()).toCharArray());
-    log.debug(bttext(p.getBytes(), p.length()).toCharArray());
   } else {  
     log.info("Received packet with command id %d", packet.command_id);
-    log.debug(bthex(p.getBytes(), p.length()).toCharArray());
   }
 }
 
@@ -60,5 +59,5 @@ int main() {
   // If main exits, there may still be other fibers running or registered event handlers etc.
   // Simply release this fiber, which will mean we enter the scheduler. Worse case, we then
   // sit in the idle task forever, in a power efficient sleep.
-  release_fiber();
+  // release_fiber();
 }
