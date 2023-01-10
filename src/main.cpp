@@ -33,6 +33,48 @@ void on_recv(MicroBitEvent) {
     });
   } else {  
     log.info("Received packet with command id %d", packet.command_id);
+
+    switch (packet.command_id) {
+    case Command::HELOP:
+      log.debug("Received HELOP");
+      state.handle_helop(packet);
+      break;
+    case Command::OLEHL:
+      log.debug("Received OLEHL");
+      if (packet.dest_addr == state.current_device->get_id()) {
+        state.handle_olehl(packet);
+      }
+      break;
+    case Command::ALIVE:
+      log.debug("Received ALIVE");
+      state.handle_alive(packet);
+      break;
+    case Command::IDENT:
+      log.debug("Received IDENT");
+      // TODO: Implement giving logical id if manager
+      break;
+    case Command::TNEDI:
+      log.debug("Received TNEDI");
+      // TODO: Implement received logical id
+      break;
+    case Command::PUSH:
+      log.debug("Received PUSH");
+      // TODO: Handle push data
+      break;
+    case Command::ADD:
+      log.debug("Receive ADD");
+      // TODO: New device added to the mesh
+      break;
+    case Command::DEL:
+      log.debug("Received DEL");
+      // TODO: Device lost on mesh
+      break;
+    default:
+      if (packet.dest_addr != 0 && packet.forwarded_by_addr == state.current_device->get_id()) {
+        state.forward(packet);
+      }
+      break;
+    }
   }
 }
 
@@ -59,5 +101,5 @@ int main() {
   // If main exits, there may still be other fibers running or registered event handlers etc.
   // Simply release this fiber, which will mean we enter the scheduler. Worse case, we then
   // sit in the idle task forever, in a power efficient sleep.
-  // release_fiber();
+  release_fiber();
 }

@@ -7,26 +7,28 @@
 #include "pfp/device.hpp"
 #include "asenum.h"
 
-enum class AddDeviceCode {
+enum class UpsertDeviceCode {
 	Success,
 	AlreadyExistTTLUpdated,
 	DeviceListFull,
 };
 
 class State;
-using AddDeviceResult = asenum::AsEnum<
-	asenum::Case11<AddDeviceCode, AddDeviceCode::Success, State*>,
-	asenum::Case11<AddDeviceCode, AddDeviceCode::AlreadyExistTTLUpdated, State*>,
-	asenum::Case11<AddDeviceCode, AddDeviceCode::DeviceListFull, State*>
+using UpsertDeviceResult = asenum::AsEnum<
+	asenum::Case11<UpsertDeviceCode, UpsertDeviceCode::Success, State*>,
+	asenum::Case11<UpsertDeviceCode, UpsertDeviceCode::AlreadyExistTTLUpdated, State*>,
+	asenum::Case11<UpsertDeviceCode, UpsertDeviceCode::DeviceListFull, State*>
 >;
 
 class State {
 	private:
+		void send_packet(Packet packet);
 		State &remove_device(uint32_t device_logical_id);
 		State &broadcast_lost_device(uint32_t device_logical_id);
 		State &broadcast_new_device(uint32_t device_logical_id);
 		std::array<Device *, DEVICE_MAX_COUNT> devices;
 		Device * gateway;
+		uint32_t last_assigned_logical_id = 1;
 
 	public:
 		MicroBit ubit;
@@ -39,7 +41,12 @@ class State {
 		void init();
 		void check_ttl();
 		void discover_network();
-		AddDeviceResult add_device(Device device);
+		void forward(Packet packet);
+		UpsertDeviceResult upsert_device(Device device);
+		
+		void handle_helop(Packet packet);
+		void handle_olehl(Packet packet);
+		void handle_alive(Packet packet);
 };
 
 #endif // __PFP_STATE_HPP__

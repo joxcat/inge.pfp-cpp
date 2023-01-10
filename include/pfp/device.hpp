@@ -7,24 +7,25 @@
 #define DEVICE_DEFAULT_TTL 60
 
 enum class DeviceState {
+	Relay,
 	DirectlyConnected,
 	IndirectlyConnected,
 	Alone,
 };
 
+// Device size 8 bytes
 struct Device {
-	private:
-		bool relay;
-		uint32_t logical_id;
-		uint8_t device_distance;
-		uint8_t relay_distance;
-		uint8_t load;
 	public:
+		uint32_t logical_id; // 4 bytes
+		uint8_t device_distance; // 1 byte
+		uint8_t relay_distance; // 1 byte
+		uint8_t load; // 1 byte
+		uint32_t through_device;
 		uint32_t get_id();
 		DeviceState get_device_state();
 		uint32_t last_update;
 
-		Device(bool relay, uint32_t logical_id, uint32_t device_distance, uint32_t relay_distance, uint8_t load, uint32_t last_update);
+		Device();
 		~Device();
 };
 
