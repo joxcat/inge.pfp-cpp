@@ -13,7 +13,7 @@
 
 #define LOG_LEVEL LOG_LEVEL_DEBUG
 
-#define PFP_LOG_BUFFER_SIZE 64
+#define PFP_LOG_BUFFER_SIZE 128
 #define PFP_LOG_SPAN_NAME_SIZE 16
 
 class Logger;

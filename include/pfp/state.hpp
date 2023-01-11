@@ -5,6 +5,9 @@
 
 #include "MicroBit.h"
 #include "pfp/device.hpp"
+#include "pfp/protocol.hpp"
+#include "pfp/result.hpp"
+#include "pfp/log.hpp"
 #include "asenum.h"
 
 enum class UpsertDeviceCode {
@@ -22,6 +25,8 @@ using UpsertDeviceResult = asenum::AsEnum<
 
 class State {
 	private:
+		Logger * logger;
+		Device * find_device(uint32_t device_logical_id);
 		void send_packet(Packet packet);
 		State &remove_device(uint32_t device_logical_id);
 		State &broadcast_lost_device(uint32_t device_logical_id);
@@ -38,7 +43,7 @@ class State {
 
 		State();
 		~State();
-		void init();
+		void init(Logger * logger);
 		void check_ttl();
 		void discover_network();
 		void forward(Packet packet);
@@ -47,6 +52,7 @@ class State {
 		void handle_helop(Packet packet);
 		void handle_olehl(Packet packet);
 		void handle_alive(Packet packet);
+		void handle_ident(Packet packet);
 };
 
 #endif // __PFP_STATE_HPP__

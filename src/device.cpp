@@ -4,20 +4,20 @@ Device::~Device() {}
 
 DeviceState Device::get_device_state() {
 	if (this->relay_distance == 0) {
-		return DeviceState::Relay;
+		return DeviceState::Alone;
 	} else if (this->relay_distance == 1) {
-		return DeviceState::DirectlyConnected;
+		return DeviceState::Relay;
 	} else if (this->relay_distance > 1) {
 		return DeviceState::IndirectlyConnected;
-	} else {
-		return DeviceState::Alone;
 	}
+
+	return DeviceState::Alone;
 }
 
 Device::Device() {
 	this->logical_id = 0;
 	this->device_distance = 0;
-	this->relay_distance = 0;
+	this->relay_distance = DEVICE_IS_ALONE_DISTANCE;
 	this->load = 0;
 	this->last_update = 0;
 }

@@ -5,10 +5,11 @@
 
 #define DEVICE_MAX_COUNT 125
 #define DEVICE_DEFAULT_TTL 60
+#define DEVICE_IS_ALONE_DISTANCE 0
+#define DEVICE_IS_RELAY_DISTANCE 1
 
 enum class DeviceState {
 	Relay,
-	DirectlyConnected,
 	IndirectlyConnected,
 	Alone,
 };

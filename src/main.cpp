@@ -51,6 +51,7 @@ void on_recv(MicroBitEvent) {
       break;
     case Command::IDENT:
       log.debug("Received IDENT");
+      state.handle_ident(packet);
       // TODO: Implement giving logical id if manager
       break;
     case Command::TNEDI:
@@ -82,7 +83,7 @@ int main() {
   // Register the listeners
   state.ubit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, on_recv, MESSAGE_BUS_LISTENER_QUEUE_IF_BUSY);
   // Initialise the micro:bit runtime.
-  state.init();
+  state.init(&logger);
 
   while (true) {
     Logger log = logger.enter_span("MAIN LOOP");
@@ -96,6 +97,8 @@ int main() {
     }
 
     state.ubit.sleep(1000);
+
+    state.check_ttl();
   }
 
   // If main exits, there may still be other fibers running or registered event handlers etc.

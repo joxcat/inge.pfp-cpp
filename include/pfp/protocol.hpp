@@ -86,7 +86,7 @@ struct Packet {
 		static Packet new_packet_add(uint32_t source_addr, uint32_t new_device_addr);
 		static Packet new_packet_del(uint32_t source_addr, uint32_t lost_device_addr);
 		static Packet new_packet_helop(uint32_t source_addr);
-		static std::vector<Packet> new_packet_olehl(uint32_t source_addr, uint32_t dest_addr, std::array<Device *, DEVICE_MAX_COUNT> devices);
+		static std::vector<Packet> new_packet_olehl(uint32_t source_addr, uint32_t dest_addr, std::array<Device *, DEVICE_MAX_COUNT> devices, Device * current_device);
 		static Packet new_packet_alive(uint32_t source_addr, uint32_t timestamp);
 };
 

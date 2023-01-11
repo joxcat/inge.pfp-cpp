@@ -95,12 +95,22 @@ Packet Packet::new_packet_helop(uint32_t source_addr) {
 	return packet;
 }
 
-std::vector<Packet> Packet::new_packet_olehl(uint32_t source_addr, uint32_t dest_addr, std::array<Device *, DEVICE_MAX_COUNT> devices) {
+std::vector<Packet> Packet::new_packet_olehl(uint32_t source_addr, uint32_t dest_addr, std::array<Device *, DEVICE_MAX_COUNT> devices, Device * current_device) {
 	std::vector<Packet> packets;
-	int packet_id = 1;
-	int device_count = 0;
+	int device_count = 1;
 	Packet packet;
+	packet.command_id = Command::OLEHL;
+	packet.source_addr = source_addr;
+	packet.dest_addr = dest_addr;
+	packet.request_id = 1; // TODO: store request till ack received
+	packet.request_part = 1;
 	IncrementalWriter devices_writer(packet.payload, 0);
+
+	// NOTE: Write the current device
+	devices_writer.write(current_device->get_id())
+			.write(current_device->device_distance)
+			.write(current_device->relay_distance)
+			.write(current_device->load);
 
 	for (const auto &device : devices) {
 		if (device != nullptr) {
@@ -128,6 +138,8 @@ std::vector<Packet> Packet::new_packet_olehl(uint32_t source_addr, uint32_t dest
 			.write(device->relay_distance)
 			.write(device->load);
 	}
+
+	packets.push_back(packet);
 
 	for (auto &packet : packets) {
 		packet.request_count = packets.size();
